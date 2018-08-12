@@ -1,27 +1,107 @@
 # AngularAnimationDemo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+This project explains how to use animations in angular.
 
-## Development server
+### Application ###
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Here I just created a simple application which has main menus. By clicking the menu item it will be redirecting to the respective page with routing animations like slidingToTop, slidingToBottom, slidingToLeft and slidingToRight.
 
-## Code scaffolding
+I used router.animations.ts file for the routing animations.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+import { trigger, state, animate, style, transition } from '@angular/animations';
+export function routerTransition() {
+  return slideToLeft();
+}
 
-## Build
+export function slideToRight() {
+  return trigger('routerTransition', [
+    state('void', style({position: 'fixed', width: '40%'}) ),
+    state('*', style({position: 'fixed', width: '0%'}) ),
+    transition(':enter', [
+      style({transform: 'translateX(-40%)'}),
+      animate('0.5s ease-in-out', style({transform: 'translateX(0%)'}))
+    ]),
+    transition(':leave', [
+      style({transform: 'translateX(0%)'}),
+      animate('0.5s ease-in-out', style({transform: 'translateX(40%)'}))
+    ])
+  ]);
+}
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+export function slideToLeft() {
+  return trigger('routerTransition', [
+    state('void', style({position: 'fixed', width: '70%'}) ),
+    state('*', style({position: 'fixed', width: '70%'}) ),
+    transition(':enter', [
+      style({transform: 'translateX(-100%)'}),
+      animate('0.5s ease-in-out', style({transform: 'translateX(0%)'}))
+    ]),
+    transition(':leave', [
+      style({transform: 'translateX(0%)'}),
+      animate('0.5s ease-in-out', style({transform: 'translateX(100%)'}))
+    ])
+  ]);
+}
 
-## Running unit tests
+export function slideToBottom() {
+  return trigger('routerTransition', [
+    state('void', style({position: 'fixed', width: '100%', height: '100%'}) ),
+    state('*', style({position: 'fixed', width: '100%', height: '100%'}) ),
+    transition(':enter', [
+      style({transform: 'translateY(-100%)'}),
+      animate('0.5s ease-in-out', style({transform: 'translateY(0%)'}))
+    ]),
+    transition(':leave', [
+      style({transform: 'translateY(0%)'}),
+      animate('0.5s ease-in-out', style({transform: 'translateY(100%)'}))
+    ])
+  ]);
+}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+export function slideToTop() {
+  return trigger('routerTransition', [
+    state('void', style({position: 'fixed', width: '100%', height: '100%'}) ),
+    state('*', style({position: 'fixed', width: '100%', height: '100%'}) ),
+    transition(':enter', [
+      style({transform: 'translateY(100%)'}),
+      animate('0.5s ease-in-out', style({transform: 'translateY(0%)'}))
+    ]),
+    transition(':leave', [
+      style({transform: 'translateY(0%)'}),
+      animate('0.5s ease-in-out', style({transform: 'translateY(-100%)'}))
+    ])
+  ]);
+}
 
-## Running end-to-end tests
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Need to call routing animation file in the component which you want to do animation effect like this.
 
-## Further help
+For example lets take 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+blog.component.ts
+
+```
+import { slideToBottom } from '../shared/router.animations';
+@Component({
+  selector: 'app-blog',
+  templateUrl: './blog.component.html',
+  styleUrls: ['./blog.component.css'],
+  animations: [slideToBottom()]
+})
+
+```
+
+blog.component.html
+
+* Need to include [@routerTransition] like below
+
+```
+<div  [@routerTransition]>
+  <img src="assets/images/blog.png"  width="100%"/>
+</div>
+
+```
+
+### Happy Coding ###
