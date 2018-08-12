@@ -6,7 +6,7 @@ This project explains how to use animations in angular.
 
 Here I just created a simple application which has main menus. By clicking the menu item it will be redirecting to the respective page with routing animations like slidingToTop, slidingToBottom, slidingToLeft and slidingToRight.
 
-I used router.animations.ts file for the routing animations.
+I used ***router.animations.ts*** file for the routing animations.
 
 ```
 import { trigger, state, animate, style, transition } from '@angular/animations';
@@ -80,7 +80,7 @@ Need to call routing animation file in the component which you want to do animat
 
 For example lets take 
 
-blog.component.ts
+***blog.component.ts***
 
 ```
 import { slideToBottom } from '../shared/router.animations';
@@ -93,7 +93,7 @@ import { slideToBottom } from '../shared/router.animations';
 
 ```
 
-blog.component.html
+***blog.component.html***
 
 * Need to include [@routerTransition] like below
 
